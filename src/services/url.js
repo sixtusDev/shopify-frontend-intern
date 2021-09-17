@@ -1,2 +1,1 @@
-export const baseUrl =
-  "https://api.nasa.gov/planetary/apod?api_key=EVhnV1fHdeTi5xzz1X7AQuymf2ffiqgd5FTRZgrc";
+export const baseUrl = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${process.env.REACT_APP_API_KEY}`;
