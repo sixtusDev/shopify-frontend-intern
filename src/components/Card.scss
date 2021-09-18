@@ -26,17 +26,14 @@
   &__text {
     margin-bottom: 2rem;
   }
-
-  &__date {
-  }
-
   &__footer {
     padding: 1.5rem 0 0 0;
   }
 
   &__button {
     background: #be7136;
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem;
+    font-size: 1.3rem !important;
     outline: none;
     border: none;
     cursor: pointer;

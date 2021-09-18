@@ -12,16 +12,34 @@ const MarsRover = () => {
   const [marsRovers, setMarsRovers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState(new Date("2019-06-03"));
+
   useEffect(() => {
     const fetchMarsRoverPhotos = async () => {
+      // Format date with the pattern used for calling nasa API
+      const date = moment(startDate).format("YYYY-MM-DD");
       try {
         setLoading(true);
-        const date = moment(startDate).format("YYYY-MM-DD");
-        const {
+        let {
           data: { photos },
         } = await getMarsRoverPhotos(date);
+
+        // Get the likes of mars rover photo from local storage based
+        // on date
+        const likesInLocalStorage = JSON.parse(
+          localStorage.getItem(`mars-rover-likes-${date}`)
+        );
+        if (likesInLocalStorage && likesInLocalStorage.length) {
+          // Map all likes to their ids using hash table
+          const likesHashTable = {};
+          for (let i = 0; i < likesInLocalStorage.length; i++) {
+            likesHashTable[likesInLocalStorage[i].id] =
+              likesInLocalStorage[i].like;
+          }
+          // Create a new array and map the likes from local storage
+          // to each item
+          photos = photos.map((m) => ({ ...m, like: likesHashTable[m.id] }));
+        }
         setMarsRovers(photos);
-        localStorage.setItem("mars-rovers", JSON.stringify(photos));
       } catch (ex) {
         if (ex.response) {
           toast.error(ex.response.data.error.message);
@@ -35,6 +53,7 @@ const MarsRover = () => {
 
   const handleLike = ({ target: { id } }) => {
     // Logic for handling likes
+    const date = moment(startDate).format("YYYY-MM-DD");
     const marsRover = marsRovers.find((m) => m.id === parseInt(id));
     let marsRoverPhotos;
     if (marsRover.like) {
@@ -47,7 +66,12 @@ const MarsRover = () => {
       );
     }
     setMarsRovers(marsRoverPhotos);
-    localStorage.setItem("mars-rovers", JSON.stringify(marsRoverPhotos));
+    // Map likes to a new object and save to local Storage
+    const likes = marsRoverPhotos.map((m) =>
+      m.like ? { id: m.id, like: m.like } : { id: m.id, like: false }
+    );
+    // Store likes in local storage for persistence
+    localStorage.setItem(`mars-rover-likes-${date}`, JSON.stringify(likes));
   };
 
   const handleDateSelect = (date) => {
@@ -69,12 +93,25 @@ const MarsRover = () => {
             color="#be7136"
           />
         </div>
-      ) : (
-        marsRovers.map((marsRover) => (
-          <div className="mars-rover" key={marsRover.id}>
-            <Card items={marsRover} onLike={handleLike} />
+      ) : marsRovers.length ? (
+        marsRovers.map(({ camera, earth_date, img_src, id, like, rover }) => (
+          <div className="mars-rover" key={id}>
+            <Card
+              title={rover.name}
+              image={img_src}
+              text={camera.name + " - " + camera.full_name}
+              id={id}
+              like={like}
+              date={earth_date}
+              onLike={handleLike}
+            />
           </div>
         ))
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          There are no pictures to display for the date:{" "}
+          {moment(startDate).format("YYYY-MM-DD")}
+        </div>
       )}
     </React.Fragment>
   );

@@ -13,6 +13,7 @@
 
 #API KEYS
 .env
+/.netlify
 
 # misc
 .DS_Store
