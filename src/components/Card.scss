@@ -1,0 +1,46 @@
+.card {
+  width: 100%;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  margin-bottom: 4rem;
+
+  &__header {
+    padding-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    text-transform: uppercase;
+  }
+
+  &__image {
+    width: 100%;
+  }
+
+  &__body {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #d4cfcf;
+  }
+
+  &__text {
+    margin-bottom: 2rem;
+  }
+
+  &__date {
+  }
+
+  &__footer {
+    padding: 1.5rem 0 0 0;
+  }
+
+  &__button {
+    background: #be7136;
+    padding: 1rem 2rem;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: inherit;
+  }
+}
