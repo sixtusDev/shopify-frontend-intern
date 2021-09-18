@@ -2,6 +2,9 @@
 
 This project was created using React. It consumes one of NASA's API, precisely the Mars Rover Photos endpoint. Mars Rover Photos API is designed to collect image data gathered by NASA's Curiosity, Opportunity, and Spirit rovers on Mars and make it more easily available to other developers, educators, and citizen scientists.
 
+## Live Demo:
+https://shopify-frontend-intern-challenge.netlify.app/
+
 ## Note
 This project uses an api key from https://api.nasa.gov/ . 
 
