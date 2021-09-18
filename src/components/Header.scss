@@ -1,0 +1,52 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  padding: 0 2rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  z-index: 900;
+  &__title {
+    font-size: 2rem;
+
+    &--sub {
+      color: #be7136;
+      font-size: 2.5rem;
+    }
+  }
+
+  &__date {
+    background-color: #be7136;
+    color: #fff;
+    padding: 0.5rem 2rem;
+    font-family: inherit;
+    border-radius: 5px;
+  }
+}
+
+.calender-container {
+  position: absolute;
+  top: 6rem;
+  right: 2rem;
+}
+
+// Overrode the default styles for react-datepicker
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  width: 3rem !important;
+  line-height: 3rem !important;
+}
+
+.react-datepicker {
+  font-size: 1.3rem !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 1.3rem !important;
+}

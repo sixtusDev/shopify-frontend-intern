@@ -10,18 +10,18 @@ import "./MarsRover.scss";
 
 const MarsRover = () => {
   const [marsRovers, setMarsRovers] = useState([]);
-  const [roverDate, setRoverDate] = useState("2019-6-3");
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date("2019-06-03"));
   useEffect(() => {
     const fetchMarsRoverPhotos = async () => {
       try {
         setLoading(true);
+        const date = moment(startDate).format("YYYY-MM-DD");
         const {
           data: { photos },
-        } = await getMarsRoverPhotos(roverDate);
+        } = await getMarsRoverPhotos(date);
         setMarsRovers(photos);
-        console.log(photos);
+        localStorage.setItem("mars-rovers", JSON.stringify(photos));
       } catch (ex) {
         if (ex.response) {
           toast.error(ex.response.data.error.message);
@@ -31,9 +31,10 @@ const MarsRover = () => {
       }
     };
     fetchMarsRoverPhotos();
-  }, [roverDate]);
+  }, [startDate]);
 
   const handleLike = ({ target: { id } }) => {
+    // Logic for handling likes
     const marsRover = marsRovers.find((m) => m.id === parseInt(id));
     let marsRoverPhotos;
     if (marsRover.like) {
@@ -46,13 +47,11 @@ const MarsRover = () => {
       );
     }
     setMarsRovers(marsRoverPhotos);
+    localStorage.setItem("mars-rovers", JSON.stringify(marsRoverPhotos));
   };
 
   const handleDateSelect = (date) => {
-    const roverDate = moment(date).format("YYYY-MM-DD");
     setStartDate(date);
-    setRoverDate(roverDate);
-    console.log(date);
   };
 
   return (
