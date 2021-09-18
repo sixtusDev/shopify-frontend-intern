@@ -12,11 +12,11 @@ const Card = ({ items, onLike }) => {
         <p className="card__text">
           {camera.name} - {camera.full_name}
         </p>
-        <p className="card__date">{earth_date}</p>
+        <p className="card__date">Date: {earth_date}</p>
       </div>
       <div className="card__footer">
         <button className="card__button" id={id} onClick={onLike}>
-          {like ? "Like" : "Unlike"}
+          {like ? "Unlike" : "Like"}
         </button>
       </div>
     </div>

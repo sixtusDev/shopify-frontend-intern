@@ -9,9 +9,11 @@ import "./App.scss";
 
 function App() {
   const [marsRovers, setMarsRovers] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchMarsRoverPhotos = async () => {
       try {
+        setLoading(true);
         const {
           data: { photos },
         } = await getMarsRoverPhotos();
@@ -19,6 +21,8 @@ function App() {
         console.log(photos);
       } catch ({ response: { data } }) {
         toast.error(data.error.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetchMarsRoverPhotos();
@@ -41,17 +45,19 @@ function App() {
 
   return (
     <div className="App">
-      <div className="spinner-container">
-        <Spinner
-          style={{ height: "50px", width: "50px" }}
-          className="spinner"
-          thickness="5px"
-          speed="0.65s"
-          label="Loading"
-          emptyColor="gray.200"
-          color="#be7136"
-        />
-      </div>
+      {loading && (
+        <div className="spinner-container">
+          <Spinner
+            style={{ height: "50px", width: "50px" }}
+            className="spinner"
+            thickness="5px"
+            speed="0.65s"
+            label="Loading"
+            emptyColor="gray.200"
+            color="#be7136"
+          />
+        </div>
+      )}
       {marsRovers.map((marsRover) => (
         <MarsRover
           key={marsRover.id}
